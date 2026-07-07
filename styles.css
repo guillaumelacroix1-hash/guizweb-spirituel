@@ -189,63 +189,140 @@ main {
 
 /* ---------- réalisations ---------- */
 
-.works-label { margin-bottom: 6px; }
+.works-label { margin-bottom: 18px; }
 
-.works-list { list-style: none; }
-
-.work {
-  border-top: 1px solid var(--border);
+.works-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: clamp(16px, 2vw, 28px);
 }
-
-.work:last-child { border-bottom: 1px solid var(--border); }
 
 .work-link {
-  display: grid;
-  grid-template-columns: auto 1fr auto auto;
-  align-items: baseline;
-  gap: clamp(14px, 3vw, 36px);
-  padding: clamp(14px, 2.2vh, 22px) 4px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
   text-decoration: none;
   color: var(--text);
-  transition: padding-left 0.4s var(--ease), opacity 0.4s var(--ease);
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+  transition:
+    transform 0.4s var(--ease),
+    opacity 0.4s var(--ease),
+    box-shadow 0.4s var(--ease),
+    border-color 0.4s var(--ease),
+    background-color var(--theme-transition) var(--ease);
 }
 
-.works-list:hover .work-link { opacity: 0.35; }
-.works-list .work-link:hover { opacity: 1; padding-left: 14px; }
+.works-list:hover .work-link { opacity: 0.45; }
+
+.works-list .work-link:hover {
+  opacity: 1;
+  transform: translateY(-6px);
+  border-color: color-mix(in srgb, var(--card-accent) 55%, transparent);
+  box-shadow:
+    0 24px 60px -24px color-mix(in srgb, var(--card-accent) 55%, transparent),
+    0 8px 24px -12px rgba(0, 0, 0, 0.35);
+}
+
+.work-visual {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--card-bg);
+}
+
+.work-shot {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.6s var(--ease);
+}
+
+.work-link:hover .work-shot { transform: scale(1.045); }
 
 .work-num {
+  position: absolute;
+  top: 10px;
+  left: 12px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: var(--text-muted);
+  font-size: 10px;
   letter-spacing: 0.15em;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+.work-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  flex: 1;
+}
+
+.work-logo {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: border-color 0.4s var(--ease);
+}
+
+.work-logo img {
+  max-width: 74%;
+  max-height: 74%;
+  object-fit: contain;
+  display: block;
+}
+
+.work-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
 }
 
 .work-name {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(20px, 3.2vw, 42px);
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  font-size: clamp(17px, 1.5vw, 21px);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
   transition: font-family var(--theme-transition) var(--ease);
 }
 
 .work-activity {
-  font-size: clamp(12px, 1.1vw, 14px);
+  font-size: 12.5px;
   color: var(--text-soft);
-  text-align: right;
+  line-height: 1.4;
   transition: color var(--theme-transition) var(--ease);
 }
 
 .work-arrow {
+  margin-left: auto;
   font-family: 'JetBrains Mono', monospace;
-  font-size: clamp(14px, 1.6vw, 20px);
+  font-size: 16px;
   color: var(--text-muted);
   transition: transform 0.3s var(--ease), color 0.3s var(--ease);
 }
 
 .work-link:hover .work-arrow {
-  color: var(--accent-2);
-  transform: translate(4px, -4px);
+  color: var(--card-accent);
+  transform: translate(3px, -3px);
 }
 
 /* ---------- footer ---------- */
@@ -289,11 +366,18 @@ body.light ::selection { color: #fff; }
 /* ---------- responsive ---------- */
 
 @media (max-width: 720px) {
-  .work-link { grid-template-columns: auto 1fr auto; }
+  .works-list { grid-template-columns: 1fr 1fr; }
   .work-activity { display: none; }
+  .work-logo { width: 34px; height: 34px; border-radius: 10px; }
+  .work-meta { padding: 11px 12px; gap: 9px; }
   .works-list:hover .work-link { opacity: 1; }
   .cta { font-size: 13px; padding: 10px 16px; }
   .glow { filter: blur(90px); }
+}
+
+@media (max-width: 440px) {
+  .works-list { grid-template-columns: 1fr; }
+  .work-activity { display: block; }
 }
 
 @media (prefers-reduced-motion: reduce) {

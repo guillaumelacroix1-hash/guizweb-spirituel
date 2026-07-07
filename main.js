@@ -18,51 +18,67 @@ const DEFAULT_THEME = {
 // Couleurs extraites des vraies chartes graphiques de chaque site
 const SITES = [
   {
+    id: 'agape',
     name: 'Agapè Médium',
     activity: 'Médium · contact défunts & lecture d’âme',
     url: 'https://agape-medium.fr/',
+    logo: 'assets/logos/agape.png',
     theme: { bg: '#fbfaf6', accent: '#c9a24b', accent2: '#a37e2c', text: '#0b1530', light: true, serif: true, ambiance: 'doré · crème · sacré · lumineux' },
   },
   {
+    id: 'anandina',
     name: 'Anandina',
     activity: 'Hypnose & soins énergétiques',
     url: 'https://anandina.fr/',
+    logo: 'assets/logos/anandina.svg',
     theme: { bg: '#000000', accent: '#f3cd67', accent2: '#ffbc7d', text: '#f3cd67', light: false, serif: true, ambiance: 'nocturne · doré · mystique · précieux' },
   },
   {
+    id: 'semons-la-vie',
     name: 'Semons la Vie',
     activity: 'Naturopathie & sophrologie',
     url: 'https://semons-la-vie.vercel.app/',
+    logo: 'assets/logos/semons-la-vie.svg',
     theme: { bg: '#f7f5f2', accent: '#5b5eab', accent2: '#7aa476', text: '#382d2d', light: true, serif: false, ambiance: 'végétal · doux · sauge · organique' },
   },
   {
+    id: 'entre-ciel-et-terre',
     name: 'Entre Ciel et Terre',
     activity: 'Médium & thérapeute énergétique',
     url: 'https://lucile-frichet-entre-ciel-et-terre.fr/',
+    logo: 'assets/logos/entre-ciel-et-terre.svg',
     theme: { bg: '#f4f0ef', accent: '#d7a697', accent2: '#2f5468', text: '#2b2c2e', light: true, serif: true, ambiance: 'poudré · terracotta · apaisant · aérien' },
   },
   {
+    id: 'plume-bleue',
     name: 'La Plume Bleue',
     activity: 'Soins énergétiques & akashiques',
     url: 'https://la-plume-bleue.vercel.app/',
+    logo: 'assets/logos/plume-bleue.png',
     theme: { bg: '#faf7f2', accent: '#0891b2', accent2: '#d4a574', text: '#0f2d4a', light: true, serif: true, ambiance: 'céleste · azur · plume · lumineux' },
   },
   {
+    id: 'porte-des-reves',
     name: 'La Porte des Rêves',
     activity: 'Hypnose transpersonnelle',
     url: 'https://la-porte-des-reves.vercel.app/',
+    logo: 'assets/logos/porte-des-reves.svg',
     theme: { bg: '#07060e', accent: '#c9a961', accent2: '#7b52b5', text: '#eeeaf5', light: false, serif: true, ambiance: 'nocturne · violet · doré · onirique' },
   },
   {
+    id: 'maison-veda',
     name: 'La Maison VEDA',
     activity: 'Retraite yoga · Sri Lanka',
     url: 'https://2027-retraite.lamaisonveda.com/',
+    logo: 'assets/logos/maison-veda.svg',
     theme: { bg: '#002d2c', accent: '#b99b64', accent2: '#b49174', text: '#f5f5f5', light: false, serif: true, ambiance: 'jungle · vert profond · or · sacré' },
   },
   {
+    id: 'given-received',
     name: 'Given & Received',
     activity: 'Reiki & coaching de vie',
     url: 'https://guillaumelacroix1-hash.github.io/given-and-received/',
+    logo: 'assets/logos/given-received.png',
     theme: { bg: '#f5e8d4', accent: '#c18749', accent2: '#a56b2f', text: '#4a321f', light: true, serif: true, ambiance: 'sable · terracotta · chaleureux · solaire' },
   },
 ];
@@ -100,11 +116,20 @@ SITES.forEach((site, i) => {
   const li = document.createElement('li');
   li.className = 'work';
   li.innerHTML = `
-    <a class="work-link" href="${site.url}" target="_blank" rel="noopener">
-      <span class="work-num">${String(i + 1).padStart(2, '0')}</span>
-      <span class="work-name">${site.name}</span>
-      <span class="work-activity">${site.activity}</span>
-      <span class="work-arrow">↗</span>
+    <a class="work-link" href="${site.url}" target="_blank" rel="noopener"
+       style="--card-bg:${site.theme.bg}; --card-accent:${site.theme.accent}">
+      <span class="work-visual">
+        <img class="work-shot" src="assets/shots/${site.id}.jpg" alt="Aperçu du site ${site.name}">
+        <span class="work-num">${String(i + 1).padStart(2, '0')}</span>
+      </span>
+      <span class="work-meta">
+        <span class="work-logo"><img src="${site.logo}" alt=""></span>
+        <span class="work-text">
+          <span class="work-name">${site.name}</span>
+          <span class="work-activity">${site.activity}</span>
+        </span>
+        <span class="work-arrow">↗</span>
+      </span>
     </a>`;
 
   const link = li.querySelector('.work-link');
