@@ -72,6 +72,15 @@ const SITES = [
     logo: 'assets/logos/given-received.png',
     theme: { bg: '#f5e8d4', accent: '#c18749', accent2: '#a56b2f', text: '#4a321f', light: true, font: "'Cormorant Garamond', serif", ambiance: 'sable · terracotta · chaleureux · solaire' },
   },
+  {
+    id: 'tama-relax',
+    name: 'Tama Relax',
+    activity: 'Massages holistiques · visage & corps',
+    url: 'https://tama-relax.fr/',
+    logo: 'assets/logos/tama-relax.svg',
+    // Taviraj = la vraie police de titres du site (Google Font)
+    theme: { bg: '#f8f6ef', accent: '#31452d', accent2: '#683826', text: '#675249', light: true, font: "'Taviraj', serif", ambiance: 'naturel · végétal · artisanal · chaleureux' },
+  },
 ];
 
 const N = SITES.length;
