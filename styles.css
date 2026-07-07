@@ -21,11 +21,16 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html, body { height: 100%; }
+html, body {
+  height: 100%;
+  /* clip (et non hidden) : interdit aussi le scroll programmatique
+     déclenché par le focus des cards latérales */
+  overflow: hidden;
+  overflow: clip;
+}
 
 body {
   height: 100svh;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   background-color: var(--bg);

@@ -171,6 +171,9 @@ function go(delta) {
 /* clic : card centrée = ouvrir le site, card latérale = la centrer
    (et donc changer l'univers) */
 cards.forEach((el, i) => {
+  // empêche le focus au clic — sinon le navigateur scrolle la page
+  // (overflow caché) pour amener le lien en vue et décale tout le layout
+  el.addEventListener('pointerdown', (e) => e.preventDefault());
   el.addEventListener('click', (e) => {
     if (suppressClick) { e.preventDefault(); return; }
     if (i !== current) {
@@ -180,6 +183,14 @@ cards.forEach((el, i) => {
     }
   });
 });
+
+/* filet de sécurité : si un scroll parasite décale quand même la page
+   (focus clavier, ancre…), on le neutralise immédiatement */
+document.addEventListener('scroll', (e) => {
+  const el = e.target === document ? document.documentElement : e.target;
+  if (el.scrollLeft) el.scrollLeft = 0;
+  if (el.scrollTop) el.scrollTop = 0;
+}, { capture: true, passive: true });
 
 /* flèches */
 document.getElementById('nav-prev').addEventListener('click', () => go(-1));
