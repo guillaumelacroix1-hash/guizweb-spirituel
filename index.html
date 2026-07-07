@@ -36,7 +36,7 @@
     <section class="hero">
       <p class="eyebrow">Création de sites · Bien-être &amp; spiritualité</p>
       <h1 class="hero-title">
-        Des sites qui ressemblent<br>à <em class="hero-em" id="hero-word">votre pratique</em>.
+        Des sites qui ressemblent à <em class="hero-em">votre pratique</em>.
       </h1>
       <p class="hero-sub">
         Je crée les sites des médiums, énergéticiens, thérapeutes et praticiens
@@ -44,18 +44,27 @@
       </p>
     </section>
 
-    <section class="works" aria-label="Réalisations">
-      <p class="works-label eyebrow">Réalisations — survolez pour changer d'univers</p>
-      <ul class="works-list" id="works-list"></ul>
+    <section class="stage-wrap" aria-label="Réalisations">
+      <div class="stage" id="stage">
+        <div class="scene" id="scene"></div>
+      </div>
+      <div class="carousel-nav">
+        <button class="nav-btn" id="nav-prev" aria-label="Réalisation précédente">←</button>
+        <p class="nav-status">
+          <span class="nav-counter" id="nav-counter">01 / 08</span>
+          <span class="nav-ambiance" id="foot-ambiance">un univers par praticien</span>
+        </p>
+        <button class="nav-btn" id="nav-next" aria-label="Réalisation suivante">→</button>
+      </div>
     </section>
   </main>
 
   <footer class="bottom">
-    <p class="foot-note" id="foot-ambiance">un univers par praticien</p>
+    <p class="foot-credit">guizweb © <span id="year"></span> — Guillaume Lacroix</p>
     <a class="cta cta-big" id="cta-bottom" href="#" target="_blank" rel="noopener">
       Discuter de mon projet <span class="cta-arrow">→</span>
     </a>
-    <p class="foot-credit">guizweb © <span id="year"></span> — Guillaume Lacroix</p>
+    <p class="foot-hint">molette, flèches ou glisser pour explorer</p>
   </footer>
 
   <script src="main.js"></script>

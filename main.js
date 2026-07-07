@@ -1,19 +1,9 @@
 /* ============================================================
-   guizweb — données des réalisations + bascule d'univers
+   guizweb — carousel 3D + bascule d'univers par réalisation
    ============================================================ */
 
 // TODO: remplacer par le vrai lien Calendly de Guillaume
 const CALENDLY_URL = 'https://calendly.com/';
-
-const DEFAULT_THEME = {
-  bg: '#07070d',
-  accent: '#7b2cbf',
-  accent2: '#00b4d8',
-  text: '#f5f5f4',
-  light: false,
-  serif: false,
-  ambiance: 'un univers par praticien',
-};
 
 // Couleurs extraites des vraies chartes graphiques de chaque site
 const SITES = [
@@ -83,6 +73,8 @@ const SITES = [
   },
 ];
 
+const N = SITES.length;
+
 /* ---------- helpers ---------- */
 
 function hexToRgba(hex, alpha) {
@@ -108,43 +100,155 @@ function applyTheme(t) {
   if (note) note.textContent = t.ambiance;
 }
 
-/* ---------- rendu de la liste ---------- */
+/* ---------- rendu des cards ---------- */
 
-const list = document.getElementById('works-list');
+const scene = document.getElementById('scene');
+const stage = document.getElementById('stage');
 
-SITES.forEach((site, i) => {
-  const li = document.createElement('li');
-  li.className = 'work';
-  li.innerHTML = `
-    <a class="work-link" href="${site.url}" target="_blank" rel="noopener"
-       style="--card-bg:${site.theme.bg}; --card-accent:${site.theme.accent}">
-      <span class="work-visual">
-        <img class="work-shot" src="assets/shots/${site.id}.jpg" alt="Aperçu du site ${site.name}">
-        <span class="work-num">${String(i + 1).padStart(2, '0')}</span>
+const cards = SITES.map((site, i) => {
+  const a = document.createElement('a');
+  a.className = 'work-card';
+  a.href = site.url;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.draggable = false;
+  a.style.setProperty('--card-bg', site.theme.bg);
+  a.innerHTML = `
+    <span class="work-visual">
+      <img class="work-shot" src="assets/shots/${site.id}.jpg" alt="Aperçu du site ${site.name}" draggable="false">
+      <span class="work-num">${String(i + 1).padStart(2, '0')}</span>
+    </span>
+    <span class="work-meta">
+      <span class="work-logo"><img src="${site.logo}" alt="" draggable="false"></span>
+      <span class="work-text">
+        <span class="work-name">${site.name}</span>
+        <span class="work-activity">${site.activity}</span>
       </span>
-      <span class="work-meta">
-        <span class="work-logo"><img src="${site.logo}" alt=""></span>
-        <span class="work-text">
-          <span class="work-name">${site.name}</span>
-          <span class="work-activity">${site.activity}</span>
-        </span>
-        <span class="work-arrow">↗</span>
-      </span>
-    </a>`;
-
-  const link = li.querySelector('.work-link');
-  link.addEventListener('mouseenter', () => applyTheme(site.theme));
-  link.addEventListener('focus', () => applyTheme(site.theme));
-  list.appendChild(li);
+      <span class="work-arrow">↗</span>
+    </span>`;
+  scene.appendChild(a);
+  return a;
 });
 
-list.addEventListener('mouseleave', () => applyTheme(DEFAULT_THEME));
-list.addEventListener('focusout', (e) => {
-  if (!list.contains(e.relatedTarget)) applyTheme(DEFAULT_THEME);
+/* ---------- carousel 3D ---------- */
+
+let current = 0;
+
+// offset le plus court en boucle : -N/2 .. +N/2
+function wrapOffset(i) {
+  return ((i - current + N + N / 2) % N) - N / 2;
+}
+
+function layout() {
+  cards.forEach((el, i) => {
+    const off = wrapOffset(i);
+    const abs = Math.abs(off);
+    const visible = abs <= 2.5;
+    el.style.transform =
+      `translate(calc(-50% + ${off * 62}%), -50%)` +
+      ` rotateY(${off * -32}deg)` +
+      ` translateZ(${-abs * 240}px)`;
+    el.style.zIndex = String(100 - Math.round(abs * 10));
+    el.style.opacity = visible ? String(1 - abs * 0.12) : '0';
+    el.style.pointerEvents = visible ? 'auto' : 'none';
+    el.classList.toggle('is-active', i === current);
+    el.setAttribute('aria-hidden', visible ? 'false' : 'true');
+    el.tabIndex = i === current ? 0 : -1;
+  });
+
+  applyTheme(SITES[current].theme);
+  document.getElementById('nav-counter').textContent =
+    `${String(current + 1).padStart(2, '0')} / ${String(N).padStart(2, '0')}`;
+}
+
+function go(delta) {
+  current = (current + delta + N) % N;
+  layout();
+}
+
+/* clic : card centrée = ouvrir le site, card latérale = naviguer */
+cards.forEach((el, i) => {
+  el.addEventListener('click', (e) => {
+    if (suppressClick) { e.preventDefault(); return; }
+    if (i !== current) {
+      e.preventDefault();
+      const off = wrapOffset(i);
+      go(Math.sign(off));
+    }
+  });
 });
 
-/* ---------- CTA + divers ---------- */
+/* flèches */
+document.getElementById('nav-prev').addEventListener('click', () => go(-1));
+document.getElementById('nav-next').addEventListener('click', () => go(1));
+
+/* clavier */
+addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') go(-1);
+  if (e.key === 'ArrowRight') go(1);
+});
+
+/* molette / trackpad (throttle) */
+let wheelLock = 0;
+addEventListener('wheel', (e) => {
+  const now = Date.now();
+  if (now - wheelLock < 450) return;
+  const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+  if (Math.abs(d) < 12) return;
+  wheelLock = now;
+  go(d > 0 ? 1 : -1);
+}, { passive: true });
+
+/* drag / swipe */
+let dragStartX = null;
+let suppressClick = false;
+
+stage.addEventListener('pointerdown', (e) => {
+  dragStartX = e.clientX;
+  suppressClick = false;
+  stage.classList.add('dragging');
+});
+
+addEventListener('pointermove', (e) => {
+  if (dragStartX === null) return;
+  const dx = e.clientX - dragStartX;
+  if (Math.abs(dx) > 55) {
+    suppressClick = true;
+    dragStartX = e.clientX;
+    go(dx < 0 ? 1 : -1);
+  }
+});
+
+addEventListener('pointerup', () => {
+  dragStartX = null;
+  stage.classList.remove('dragging');
+  setTimeout(() => { suppressClick = false; }, 50);
+});
+
+/* ---------- tilt 3D suivant la souris ---------- */
+
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let targetRX = 0, targetRY = 0, curRX = 0, curRY = 0;
+
+if (!reduceMotion) {
+  addEventListener('mousemove', (e) => {
+    const nx = (e.clientX / innerWidth) * 2 - 1;   // -1 .. 1
+    const ny = (e.clientY / innerHeight) * 2 - 1;
+    targetRY = nx * 7;
+    targetRX = ny * -5;
+  });
+
+  (function tick() {
+    curRX += (targetRX - curRX) * 0.06;
+    curRY += (targetRY - curRY) * 0.06;
+    scene.style.transform = `rotateX(${curRX.toFixed(3)}deg) rotateY(${curRY.toFixed(3)}deg)`;
+    requestAnimationFrame(tick);
+  })();
+}
+
+/* ---------- init ---------- */
 
 document.getElementById('cta-top').href = CALENDLY_URL;
 document.getElementById('cta-bottom').href = CALENDLY_URL;
 document.getElementById('year').textContent = new Date().getFullYear();
+layout();
