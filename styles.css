@@ -14,6 +14,7 @@
   --text-muted: #757575;
   --border: rgba(255, 255, 255, 0.08);
   --font-display: 'Cabinet Grotesk', sans-serif;
+  --display-weight: 800;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --theme-transition: 0.7s;
@@ -170,7 +171,7 @@ main {
 
 .hero-title {
   font-family: var(--font-display);
-  font-weight: 800;
+  font-weight: var(--display-weight);
   font-size: clamp(26px, 3.4vw, 52px);
   line-height: 1.05;
   letter-spacing: -0.025em;
@@ -320,7 +321,7 @@ main {
 
 .work-name {
   font-family: var(--font-display);
-  font-weight: 800;
+  font-weight: var(--display-weight);
   font-size: clamp(16px, 1.5vw, 20px);
   letter-spacing: -0.01em;
   line-height: 1.15;
@@ -438,6 +439,157 @@ main {
   color: var(--text-muted);
   text-align: right;
   transition: color var(--theme-transition) var(--ease);
+}
+
+/* ---------- modal contact ---------- */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+}
+
+.modal.open { opacity: 1; }
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.modal-card {
+  position: relative;
+  width: min(480px, 100%);
+  max-height: calc(100svh - 40px);
+  overflow-y: auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: clamp(24px, 4vw, 36px);
+  box-shadow: 0 40px 120px -30px rgba(0, 0, 0, 0.6);
+  transform: translateY(14px) scale(0.98);
+  transition:
+    transform 0.35s var(--ease),
+    background-color var(--theme-transition) var(--ease);
+}
+
+.modal.open .modal-card { transform: none; }
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+.modal-close:hover { color: var(--text); border-color: var(--accent); }
+
+.modal-title {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: clamp(22px, 3vw, 30px);
+  letter-spacing: -0.02em;
+}
+
+.modal-sub {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--text-soft);
+}
+
+#contact-form {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.field input,
+.field textarea {
+  font-family: 'General Sans', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--text);
+  background: color-mix(in srgb, var(--text) 5%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 14px;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.25s var(--ease);
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: color-mix(in srgb, var(--accent) 65%, transparent);
+}
+
+.field ::placeholder { color: var(--text-muted); }
+
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.modal-send {
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.modal-send:disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.form-status {
+  min-height: 18px;
+  font-size: 13px;
+  color: var(--text-soft);
+  text-align: center;
+}
+
+.form-status.error { color: #e5484d; }
+
+.modal-success {
+  margin-top: 26px;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: clamp(19px, 2.4vw, 24px);
+  line-height: 1.45;
+  text-align: center;
 }
 
 /* ---------- thème clair (univers clairs) ---------- */

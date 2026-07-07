@@ -11,7 +11,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>">
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
   <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,500&f[]=general-sans@300,400,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:wght@500;600&family=Fraunces:wght@500;600&family=Libre+Caslon+Display&display=swap">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -26,21 +26,22 @@
     <a class="brand" href="/">
       <span class="brand-mark">✦</span> guizweb
     </a>
-    <a class="cta" id="cta-top" href="#" target="_blank" rel="noopener">
+    <button class="cta" id="cta-open" type="button">
       Discuter de mon projet
       <span class="cta-arrow">→</span>
-    </a>
+    </button>
   </header>
 
   <main>
     <section class="hero">
       <p class="eyebrow">Création de sites · Bien-être &amp; spiritualité</p>
       <h1 class="hero-title">
-        Des sites qui ressemblent à <em class="hero-em">votre pratique</em>.
+        Votre pratique a une âme. <em class="hero-em">Votre site aussi.</em>
       </h1>
       <p class="hero-sub">
-        Je crée les sites des médiums, énergéticiens, thérapeutes et praticiens
-        des médecines alternatives — et je m'occupe de toute leur présence en ligne.
+        Développeur de métier, praticien en hypnose spirituelle aujourd'hui :
+        je connais votre monde de l'intérieur, et je crée pour chaque thérapeute
+        l'univers en ligne qui lui ressemble.
       </p>
     </section>
 
@@ -63,6 +64,41 @@
     <p class="foot-credit">guizweb © <span id="year"></span> — Guillaume Lacroix</p>
     <p class="foot-hint">molette, flèches ou glisser pour explorer</p>
   </footer>
+
+  <div class="modal" id="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" type="button" data-close aria-label="Fermer">×</button>
+      <h2 class="modal-title" id="modal-title">Discutons de votre projet</h2>
+      <p class="modal-sub">Parlez-moi de votre pratique — je vous réponds sous 24&nbsp;h.</p>
+      <form id="contact-form" novalidate>
+        <label class="field">
+          <span>Votre nom</span>
+          <input name="name" type="text" required autocomplete="name">
+        </label>
+        <label class="field">
+          <span>Votre email</span>
+          <input name="email" type="email" required autocomplete="email">
+        </label>
+        <label class="field">
+          <span>Votre pratique</span>
+          <input name="activity" type="text" placeholder="hypnose, médiumnité, naturopathie…">
+        </label>
+        <label class="field">
+          <span>Votre projet</span>
+          <textarea name="message" rows="4" required placeholder="Parlez-moi de vous, de votre univers, de ce dont vous avez besoin…"></textarea>
+        </label>
+        <input class="hp" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="cta modal-send" id="form-send" type="submit">
+          Envoyer <span class="cta-arrow">→</span>
+        </button>
+        <p class="form-status" id="form-status" role="status"></p>
+      </form>
+      <p class="modal-success" id="modal-success" hidden>
+        ✨ Message envoyé.<br>Je reviens vers vous très vite.
+      </p>
+    </div>
+  </div>
 
   <script src="main.js"></script>
 </body>

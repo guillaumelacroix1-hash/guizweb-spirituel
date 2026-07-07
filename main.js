@@ -2,10 +2,9 @@
    guizweb — carousel 3D + bascule d'univers par réalisation
    ============================================================ */
 
-// TODO: remplacer par le vrai lien Calendly de Guillaume
-const CALENDLY_URL = 'https://calendly.com/';
-
-// Couleurs extraites des vraies chartes graphiques de chaque site
+// Couleurs ET polices extraites des vraies chartes graphiques de
+// chaque site (la police de titres de l'univers = celle du site,
+// ou son équivalent Google Fonts le plus proche)
 const SITES = [
   {
     id: 'agape',
@@ -13,7 +12,7 @@ const SITES = [
     activity: 'Médium · contact défunts & lecture d’âme',
     url: 'https://agape-medium.fr/',
     logo: 'assets/logos/agape.png',
-    theme: { bg: '#fbfaf6', accent: '#c9a24b', accent2: '#a37e2c', text: '#0b1530', light: true, serif: true, ambiance: 'doré · crème · sacré · lumineux' },
+    theme: { bg: '#fbfaf6', accent: '#c9a24b', accent2: '#a37e2c', text: '#0b1530', light: true, font: "'Cormorant Garamond', serif", ambiance: 'doré · crème · sacré · lumineux' },
   },
   {
     id: 'anandina',
@@ -21,7 +20,8 @@ const SITES = [
     activity: 'Hypnose & soins énergétiques',
     url: 'https://anandina.fr/',
     logo: 'assets/logos/anandina.svg',
-    theme: { bg: '#000000', accent: '#f3cd67', accent2: '#ffbc7d', text: '#f3cd67', light: false, serif: true, ambiance: 'nocturne · doré · mystique · précieux' },
+    // le site utilise Adobe Caslon Pro (Typekit) → Libre Caslon en équivalent
+    theme: { bg: '#000000', accent: '#f3cd67', accent2: '#ffbc7d', text: '#f3cd67', light: false, font: "'Libre Caslon Display', serif", ambiance: 'nocturne · doré · mystique · précieux' },
   },
   {
     id: 'semons-la-vie',
@@ -29,7 +29,8 @@ const SITES = [
     activity: 'Naturopathie & sophrologie',
     url: 'https://semons-la-vie.vercel.app/',
     logo: 'assets/logos/semons-la-vie.svg',
-    theme: { bg: '#f7f5f2', accent: '#5b5eab', accent2: '#7aa476', text: '#382d2d', light: true, serif: false, ambiance: 'végétal · doux · sauge · organique' },
+    // titres « Arches » → Playfair Display (fallback officiel de leur CSS)
+    theme: { bg: '#f7f5f2', accent: '#5b5eab', accent2: '#7aa476', text: '#382d2d', light: true, font: "'Playfair Display', serif", ambiance: 'végétal · doux · sauge · organique' },
   },
   {
     id: 'entre-ciel-et-terre',
@@ -37,7 +38,7 @@ const SITES = [
     activity: 'Médium & thérapeute énergétique',
     url: 'https://lucile-frichet-entre-ciel-et-terre.fr/',
     logo: 'assets/logos/entre-ciel-et-terre.svg',
-    theme: { bg: '#f4f0ef', accent: '#d7a697', accent2: '#2f5468', text: '#2b2c2e', light: true, serif: true, ambiance: 'poudré · terracotta · apaisant · aérien' },
+    theme: { bg: '#f4f0ef', accent: '#d7a697', accent2: '#2f5468', text: '#2b2c2e', light: true, font: "'Playfair Display', serif", ambiance: 'poudré · terracotta · apaisant · aérien' },
   },
   {
     id: 'plume-bleue',
@@ -45,7 +46,7 @@ const SITES = [
     activity: 'Soins énergétiques & akashiques',
     url: 'https://la-plume-bleue.vercel.app/',
     logo: 'assets/logos/plume-bleue.png',
-    theme: { bg: '#faf7f2', accent: '#0891b2', accent2: '#d4a574', text: '#0f2d4a', light: true, serif: true, ambiance: 'céleste · azur · plume · lumineux' },
+    theme: { bg: '#faf7f2', accent: '#0891b2', accent2: '#d4a574', text: '#0f2d4a', light: true, font: "'Fraunces', serif", ambiance: 'céleste · azur · plume · lumineux' },
   },
   {
     id: 'porte-des-reves',
@@ -53,7 +54,7 @@ const SITES = [
     activity: 'Hypnose transpersonnelle',
     url: 'https://la-porte-des-reves.vercel.app/',
     logo: 'assets/logos/porte-des-reves.svg',
-    theme: { bg: '#07060e', accent: '#c9a961', accent2: '#7b52b5', text: '#eeeaf5', light: false, serif: true, ambiance: 'nocturne · violet · doré · onirique' },
+    theme: { bg: '#07060e', accent: '#c9a961', accent2: '#7b52b5', text: '#eeeaf5', light: false, font: "'Cormorant Garamond', serif", ambiance: 'nocturne · violet · doré · onirique' },
   },
   {
     id: 'maison-veda',
@@ -61,7 +62,7 @@ const SITES = [
     activity: 'Retraite yoga · Sri Lanka',
     url: 'https://2027-retraite.lamaisonveda.com/',
     logo: 'assets/logos/maison-veda.svg',
-    theme: { bg: '#002d2c', accent: '#b99b64', accent2: '#b49174', text: '#f5f5f5', light: false, serif: true, ambiance: 'jungle · vert profond · or · sacré' },
+    theme: { bg: '#002d2c', accent: '#b99b64', accent2: '#b49174', text: '#f5f5f5', light: false, font: "'Playfair Display', serif", ambiance: 'jungle · vert profond · or · sacré' },
   },
   {
     id: 'given-received',
@@ -69,7 +70,7 @@ const SITES = [
     activity: 'Reiki & coaching de vie',
     url: 'https://guillaumelacroix1-hash.github.io/given-and-received/',
     logo: 'assets/logos/given-received.png',
-    theme: { bg: '#f5e8d4', accent: '#c18749', accent2: '#a56b2f', text: '#4a321f', light: true, serif: true, ambiance: 'sable · terracotta · chaleureux · solaire' },
+    theme: { bg: '#f5e8d4', accent: '#c18749', accent2: '#a56b2f', text: '#4a321f', light: true, font: "'Cormorant Garamond', serif", ambiance: 'sable · terracotta · chaleureux · solaire' },
   },
 ];
 
@@ -93,7 +94,10 @@ function applyTheme(t) {
   root.setProperty('--text-soft', hexToRgba(t.text, 0.72));
   root.setProperty('--text-muted', hexToRgba(t.text, 0.5));
   root.setProperty('--border', hexToRgba(t.text, t.light ? 0.14 : 0.1));
-  root.setProperty('--font-display', t.serif ? "'Cormorant Garamond', serif" : "'Cabinet Grotesk', sans-serif");
+  const font = t.font || "'Cabinet Grotesk', sans-serif";
+  root.setProperty('--font-display', font);
+  // les serifs Google chargées en 500/600, Cabinet Grotesk en 800
+  root.setProperty('--display-weight', font.includes('Cabinet') ? '800' : '600');
   document.body.classList.toggle('light', !!t.light);
 
   const note = document.getElementById('foot-ambiance');
@@ -190,9 +194,11 @@ cards.forEach((el, i) => {
 });
 
 /* filet de sécurité : si un scroll parasite décale quand même la page
-   (focus clavier, ancre…), on le neutralise immédiatement */
+   (focus clavier, ancre…), on le neutralise immédiatement.
+   Exception : l'intérieur du modal a le droit de scroller. */
 document.addEventListener('scroll', (e) => {
   const el = e.target === document ? document.documentElement : e.target;
+  if (el.closest && el.closest('.modal')) return;
   if (el.scrollLeft) el.scrollLeft = 0;
   if (el.scrollTop) el.scrollTop = 0;
 }, { capture: true, passive: true });
@@ -203,6 +209,7 @@ document.getElementById('nav-next').addEventListener('click', () => go(1));
 
 /* clavier */
 addEventListener('keydown', (e) => {
+  if (modalOpen) { if (e.key === 'Escape') closeModal(); return; }
   if (e.key === 'ArrowLeft') go(-1);
   if (e.key === 'ArrowRight') go(1);
 });
@@ -210,6 +217,7 @@ addEventListener('keydown', (e) => {
 /* molette / trackpad (throttle) */
 let wheelLock = 0;
 addEventListener('wheel', (e) => {
+  if (modalOpen) return;
   const now = Date.now();
   if (now - wheelLock < 450) return;
   const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
@@ -263,8 +271,59 @@ if (!reduceMotion) {
   })();
 }
 
+/* ---------- modal contact (Resend via /api/contact) ---------- */
+
+const modal = document.getElementById('modal');
+const form = document.getElementById('contact-form');
+const formStatus = document.getElementById('form-status');
+let modalOpen = false;
+
+function openModal() {
+  modal.hidden = false;
+  modalOpen = true;
+  requestAnimationFrame(() => modal.classList.add('open'));
+  form.querySelector('input[name="name"]').focus({ preventScroll: true });
+}
+
+function closeModal() {
+  modal.classList.remove('open');
+  modalOpen = false;
+  setTimeout(() => { modal.hidden = true; }, 300);
+}
+
+document.getElementById('cta-open').addEventListener('click', openModal);
+modal.querySelectorAll('[data-close]').forEach((el) =>
+  el.addEventListener('click', closeModal));
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!form.reportValidity()) return;
+
+  const send = document.getElementById('form-send');
+  send.disabled = true;
+  formStatus.classList.remove('error');
+  formStatus.textContent = 'Envoi en cours…';
+
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(Object.fromEntries(new FormData(form))),
+    });
+    if (!res.ok) throw new Error(String(res.status));
+    form.hidden = true;
+    formStatus.textContent = '';
+    document.getElementById('modal-success').hidden = false;
+  } catch {
+    formStatus.classList.add('error');
+    formStatus.innerHTML =
+      'Oups, l’envoi a échoué. Écrivez-moi directement : ' +
+      '<a href="mailto:guillaumelacroix1@gmail.com" style="color:inherit">guillaumelacroix1@gmail.com</a>';
+    send.disabled = false;
+  }
+});
+
 /* ---------- init ---------- */
 
-document.getElementById('cta-top').href = CALENDLY_URL;
 document.getElementById('year').textContent = new Date().getFullYear();
 layout();
