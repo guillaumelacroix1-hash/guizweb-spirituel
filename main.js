@@ -143,13 +143,18 @@ function layout() {
   cards.forEach((el, i) => {
     const off = wrapOffset(i);
     const abs = Math.abs(off);
+    const sign = Math.sign(off);
     const visible = abs <= 3.5;
-    const scale = i === current ? 1.16 : 1 - abs * 0.05;
-    el.style.transform =
-      `translate(calc(-50% + ${off * 66}%), -50%)` +
-      ` rotateY(${off * -30}deg)` +
-      ` translateZ(${-abs * 220}px)` +
-      ` scale(${scale.toFixed(3)})`;
+    // coverflow : toutes les cards latérales à la même profondeur et au
+    // même angle ; le pas horizontal est corrigé de la projection
+    // perspective pour des écarts réguliers à l'écran (mesurés)
+    const x = sign * (84 + (abs - 1) * 101 + Math.max(0, abs - 2) * 18);
+    const scale = i === current ? 1.16 : 1;
+    el.style.transform = i === current
+      ? `translate(-50%, -50%) scale(${scale})`
+      : `translate(calc(-50% + ${x}%), -50%)` +
+        ` rotateY(${sign * -35}deg)` +
+        ` translateZ(-260px)`;
     el.style.zIndex = String(100 - Math.round(abs * 10));
     el.style.opacity = visible ? String(1 - abs * 0.08) : '0';
     el.style.pointerEvents = visible ? 'auto' : 'none';
@@ -220,7 +225,6 @@ let suppressClick = false;
 stage.addEventListener('pointerdown', (e) => {
   dragStartX = e.clientX;
   suppressClick = false;
-  stage.classList.add('dragging');
 });
 
 addEventListener('pointermove', (e) => {
@@ -235,7 +239,6 @@ addEventListener('pointermove', (e) => {
 
 addEventListener('pointerup', () => {
   dragStartX = null;
-  stage.classList.remove('dragging');
   setTimeout(() => { suppressClick = false; }, 50);
 });
 

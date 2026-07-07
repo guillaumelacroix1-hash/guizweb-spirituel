@@ -211,10 +211,7 @@ main {
   position: relative;
   perspective: 1600px;
   touch-action: pan-y;
-  cursor: grab;
 }
-
-.stage.dragging { cursor: grabbing; }
 
 .scene {
   position: absolute;
