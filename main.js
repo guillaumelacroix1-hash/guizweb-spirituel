@@ -143,13 +143,15 @@ function layout() {
   cards.forEach((el, i) => {
     const off = wrapOffset(i);
     const abs = Math.abs(off);
-    const visible = abs <= 2.5;
+    const visible = abs <= 3.5;
+    const scale = i === current ? 1.16 : 1 - abs * 0.05;
     el.style.transform =
-      `translate(calc(-50% + ${off * 62}%), -50%)` +
-      ` rotateY(${off * -32}deg)` +
-      ` translateZ(${-abs * 240}px)`;
+      `translate(calc(-50% + ${off * 66}%), -50%)` +
+      ` rotateY(${off * -30}deg)` +
+      ` translateZ(${-abs * 220}px)` +
+      ` scale(${scale.toFixed(3)})`;
     el.style.zIndex = String(100 - Math.round(abs * 10));
-    el.style.opacity = visible ? String(1 - abs * 0.12) : '0';
+    el.style.opacity = visible ? String(1 - abs * 0.08) : '0';
     el.style.pointerEvents = visible ? 'auto' : 'none';
     el.classList.toggle('is-active', i === current);
     el.setAttribute('aria-hidden', visible ? 'false' : 'true');
@@ -166,14 +168,15 @@ function go(delta) {
   layout();
 }
 
-/* clic : card centrée = ouvrir le site, card latérale = naviguer */
+/* clic : card centrée = ouvrir le site, card latérale = la centrer
+   (et donc changer l'univers) */
 cards.forEach((el, i) => {
   el.addEventListener('click', (e) => {
     if (suppressClick) { e.preventDefault(); return; }
     if (i !== current) {
       e.preventDefault();
-      const off = wrapOffset(i);
-      go(Math.sign(off));
+      current = i;
+      layout();
     }
   });
 });
@@ -249,6 +252,5 @@ if (!reduceMotion) {
 /* ---------- init ---------- */
 
 document.getElementById('cta-top').href = CALENDLY_URL;
-document.getElementById('cta-bottom').href = CALENDLY_URL;
 document.getElementById('year').textContent = new Date().getFullYear();
 layout();

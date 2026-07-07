@@ -415,9 +415,9 @@ main {
   position: relative;
   z-index: 1;
   flex: none;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
   padding: clamp(10px, 2vh, 20px) clamp(20px, 5vw, 64px);
 }
@@ -454,9 +454,8 @@ body.light ::selection { color: #fff; }
   .work-card { width: min(480px, 84vw); }
   .nav-status { min-width: 0; }
   .nav-ambiance { display: none; }
-  .bottom { grid-template-columns: 1fr; justify-items: center; gap: 8px; }
+  .bottom { justify-content: center; }
   .foot-hint { display: none; }
-  .foot-credit { order: 2; }
 }
 
 @media (max-height: 640px) {
