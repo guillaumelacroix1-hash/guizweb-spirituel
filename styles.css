@@ -192,8 +192,10 @@ main {
   margin: 10px auto 0;
   max-width: 640px;
   font-size: clamp(13px, 1.2vw, 16px);
-  line-height: 1.55;
-  color: var(--text-soft);
+  font-weight: 400;
+  letter-spacing: 0.006em;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--text) 82%, transparent);
   transition: color var(--theme-transition) var(--ease);
 }
 
