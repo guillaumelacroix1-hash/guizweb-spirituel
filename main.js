@@ -1,5 +1,5 @@
 /* ============================================================
-   guizweb — carousel 3D + bascule d'univers par réalisation
+   Guillaume Lacroix — carousel 3D + bascule d'univers par réalisation
    ============================================================ */
 
 // Couleurs ET polices extraites des vraies chartes graphiques de

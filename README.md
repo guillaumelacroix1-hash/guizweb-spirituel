@@ -1,6 +1,6 @@
-# Guizweb — Sites & présence digitale pour le monde spirituel
+# Guillaume Lacroix — Sites & présence digitale pour le monde spirituel
 
-Site officiel de Guizweb : création de sites et accompagnement digital pour les praticiens du bien-être, de l'ésotérisme et des médecines alternatives.
+Site officiel : création de sites et accompagnement digital pour les praticiens du bien-être, de l'ésotérisme et des médecines alternatives.
 
 - Site statique (HTML/CSS/JS, sans build)
 - Déployé sur Vercel

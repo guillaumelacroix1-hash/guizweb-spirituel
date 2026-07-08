@@ -1,10 +1,10 @@
 /* ============================================================
-   guizweb — spirituel · fullscreen, carousel 3D, un univers
-   par réalisation
+   Guillaume Lacroix — spirituel · fullscreen, carousel 3D, un
+   univers par réalisation
    ============================================================ */
 
 :root {
-  /* Univers par défaut (guizweb) — surchargé par la card centrée */
+  /* Univers par défaut — surchargé par la card centrée */
   --bg: #07070d;
   --bg-soft: #0a0a12;
   --accent: #7b2cbf;

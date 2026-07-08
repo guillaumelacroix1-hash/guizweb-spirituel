@@ -28,10 +28,10 @@ export default async function handler(req, res) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from: 'Guizweb <onboarding@resend.dev>',
+      from: 'Guillaume Lacroix <onboarding@resend.dev>',
       to: ['guillaumelacroix1@gmail.com'],
       reply_to: clip(email, 200),
-      subject: `✦ Contact guizweb — ${clip(name, 100)}`,
+      subject: `✦ Contact — ${clip(name, 100)}`,
       text: [
         `Nom : ${clip(name, 100)}`,
         `Email : ${clip(email, 200)}`,
