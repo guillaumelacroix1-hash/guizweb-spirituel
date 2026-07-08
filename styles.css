@@ -456,6 +456,14 @@ main {
   transition: opacity 0.3s var(--ease);
 }
 
+/* une règle d'auteur (.modal { display: grid }) l'emporte toujours sur
+   la règle [hidden] { display: none } du navigateur, même à spécificité
+   égale — sans ceci la modal reste affichée (invisible) en permanence
+   et intercepte tous les clics de la page */
+.modal[hidden] {
+  display: none;
+}
+
 .modal.open { opacity: 1; }
 
 .modal-backdrop {
